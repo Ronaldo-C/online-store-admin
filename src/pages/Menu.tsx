@@ -53,7 +53,7 @@ const Menu: React.FC = () => {
   const [openMenus, setOpenMenus] = useState<{ [key: number]: boolean }>({})
   const navigate = useNavigate()
   const userInfo = useAtomValue(userAtom)
-  console.log(userInfo)
+
   const handleMenuClick = (item: MenuItem, idx: number) => {
     if (item.path) {
       navigate(item.path)

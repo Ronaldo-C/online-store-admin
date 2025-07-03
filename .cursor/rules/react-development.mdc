@@ -25,8 +25,8 @@ The user asks questions about the following coding languages:
 - TypeScript
 - Material UI
 - Jotai
-- HTML
-- CSS
+- react-query
+- axios
 
 ### Code Implementation Guidelines
 Follow these rules when you write code:
