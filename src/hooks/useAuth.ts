@@ -10,15 +10,14 @@ const useAuth = () => {
   const location = useLocation()
   const [token, setToken] = useAtom(tokenAtom)
   const setUser = useSetAtom(userAtom)
-
+  console.log(token)
   const {
     data: userInfo,
     isSuccess,
     isError,
-    refetch,
   } = useQuery({
     queryKey: ['userInfo', token],
-    queryFn: () => authService.getUserInfo(),
+    queryFn: authService.getUserInfo,
     enabled: !!token,
     retry: false,
   })
@@ -30,9 +29,7 @@ const useAuth = () => {
       if (location.pathname !== '/auth/login') {
         navigate('/auth/login', { replace: true })
       }
-      return
     }
-    refetch()
   }, [token])
 
   useEffect(() => {

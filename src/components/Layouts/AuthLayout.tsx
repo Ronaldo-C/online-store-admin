@@ -1,8 +1,10 @@
 import Menu from '@/pages/Menu'
 import { Stack } from '@mui/material'
 import { Outlet } from 'react-router'
+import useAuth from '@/hooks/useAuth'
 
 export default function AuthLayout() {
+  useAuth()
   return (
     <Stack
       height="100vh"
