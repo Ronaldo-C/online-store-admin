@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   Box,
   Paper,
@@ -8,76 +8,81 @@ import {
   Container,
   Alert,
   CircularProgress,
-} from '@mui/material';
-import { useMutation } from '@tanstack/react-query';
-import { authService } from '../services/auth';
-import type { LoginRequest } from '../types/auth';
-import { useNavigate } from 'react-router-dom';
-import type { ApiErrorResponse } from '../types/common';
-import { useSetRecoilState } from 'recoil';
-import { userState, tokenState } from '../recoils/userState';
+} from '@mui/material'
+import { useMutation } from '@tanstack/react-query'
+import { authService } from '../services/auth'
+import type { LoginRequest } from '../types/auth'
+import { useNavigate } from 'react-router'
+import type { ApiErrorResponse } from '../types/common'
+import { useSetAtom } from 'jotai'
+import { userAtom, tokenAtom } from '@/atoms/userAtom'
+import {
+  ERROR_AUTH_MESSAGE_CODE,
+  ERROR_NOTFOUND_MESSAGE_CODE,
+  ERROR_UNAUTHORIZED_MESSAGE_CODE,
+} from '../types/error-code'
 
-const Login: React.FC = () => {
+const LoginPage: React.FC = () => {
   const [formData, setFormData] = useState<LoginRequest>({
     name: '',
     password: '',
-  });
-  const [error, setError] = useState<string>('');
-  const navigate = useNavigate();
-  const setUser = useSetRecoilState(userState);
-  const setToken = useSetRecoilState(tokenState);
+  })
+  const [error, setError] = useState<string>('')
+  const navigate = useNavigate()
+  const setUser = useSetAtom(userAtom)
+  const setToken = useSetAtom(tokenAtom)
 
   const loginMutation = useMutation({
     mutationFn: authService.login,
-    onSuccess: (data) => {
+    onSuccess: data => {
       if ('data' in data && data.data.accessToken) {
-        setUser(data.data);
-        setToken(data.data.accessToken);
-        navigate('/dashboard');
+        setUser(data.data)
+        setToken(data.data.accessToken)
+        navigate('/dashboard')
       } else {
-        setUser(null);
-        setToken(null);
-        setError('登录失败，请重试');
+        setUser(null)
+        setToken(null)
+        setError('登录失败，请重试')
       }
     },
     onError: (error: unknown) => {
-      setUser(null);
-      setToken(null);
-      let msg = '网络错误，请稍后重试';
-      const err = error as { response?: { data?: ApiErrorResponse } };
+      setUser(null)
+      setToken(null)
+      let msg = '网络错误，请稍后重试'
+      const err = error as { response?: { data?: ApiErrorResponse } }
       if (err?.response?.data?.msg) {
         switch (err.response.data.msg) {
-          case 'NOT_FOUND':
-            msg = '账户不存在';
-            break;
-          case 'UNAUTHORIZED':
-            msg = '密码错误';
-            break;
-          case 'STATUS_ERROR':
-          case 'LOCKED':
-            msg = '账户异常';
-            break;
+          case ERROR_NOTFOUND_MESSAGE_CODE.NOT_FOUND:
+            msg = '账户不存在'
+            break
+          case ERROR_UNAUTHORIZED_MESSAGE_CODE.UNAUTHORIZED:
+            msg = '密码错误'
+            break
+          case ERROR_AUTH_MESSAGE_CODE.STATUS_ERROR:
+          case ERROR_AUTH_MESSAGE_CODE.LOCKED:
+            msg = '账户异常'
+            break
           default:
-            msg = '登录失败';
+            msg = '登录失败'
         }
       }
-      setError(msg);
+      setError(msg)
     },
-  });
+  })
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData(prev => ({
       ...prev,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    loginMutation.mutate(formData);
-  };
+    e.preventDefault()
+    setError('')
+    loginMutation.mutate(formData)
+  }
 
   return (
     <Container
@@ -149,16 +154,12 @@ const Login: React.FC = () => {
             sx={{ mt: 3, mb: 2 }}
             disabled={loginMutation.isPending}
           >
-            {loginMutation.isPending ? (
-              <CircularProgress size={24} color="inherit" />
-            ) : (
-              '登录'
-            )}
+            {loginMutation.isPending ? <CircularProgress size={24} color="inherit" /> : '登录'}
           </Button>
         </Box>
       </Paper>
     </Container>
-  );
-};
+  )
+}
 
-export default Login; 
+export default LoginPage

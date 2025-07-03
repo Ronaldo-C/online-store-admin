@@ -1,7 +1,7 @@
-import React from 'react';
-import { Box, Typography, Container, Paper } from '@mui/material';
+import React from 'react'
+import { Box, Typography, Container, Paper } from '@mui/material'
 
-const Dashboard: React.FC = () => {
+const DashboardPage: React.FC = () => {
   return (
     <Container maxWidth="lg">
       <Box sx={{ mt: 4 }}>
@@ -18,7 +18,7 @@ const Dashboard: React.FC = () => {
         </Paper>
       </Box>
     </Container>
-  );
-};
+  )
+}
 
-export default Dashboard; 
+export default DashboardPage
