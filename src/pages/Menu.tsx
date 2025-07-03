@@ -1,70 +1,143 @@
-import React from 'react';
-import { Box, List, ListItem, ListItemText, Collapse, Typography, ListItemButton } from '@mui/material';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import React, { useState } from 'react'
+import {
+  Drawer,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Collapse,
+  Avatar,
+  Typography,
+  Box,
+  Divider,
+} from '@mui/material'
+import ExpandLess from '@mui/icons-material/ExpandLess'
+import ExpandMore from '@mui/icons-material/ExpandMore'
+import StoreIcon from '@mui/icons-material/Store'
+import PersonIcon from '@mui/icons-material/Person'
+import { useNavigate } from 'react-router'
+import { useAtomValue } from 'jotai'
+import { userAtom } from '@/atoms/userAtom'
 
-const menuData = [
+const drawerWidth = 240
+
+interface MenuChild {
+  label: string
+  path?: string
+}
+
+interface MenuItem {
+  label: string
+  icon: React.ReactNode
+  path?: string
+  children?: MenuChild[]
+}
+
+const menuList: MenuItem[] = [
   {
-    title: '商品管理',
+    label: '商品管理',
+    icon: <StoreIcon />,
     children: [
-      { title: '商品管理' },
-      { title: '商品分类管理' },
+      { label: '商品管理', path: '/dashboard/products' },
+      { label: '商品分类管理', path: '/dashboard/product-categories' },
     ],
   },
   {
-    title: '账户管理',
-    children: [],
+    label: '管理员',
+    icon: <PersonIcon />,
+    path: '/dashboard/admin',
   },
-];
+]
 
-const MenuPage: React.FC = () => {
-  const [open, setOpen] = React.useState<{ [key: number]: boolean }>({});
+const Menu: React.FC = () => {
+  const [openMenus, setOpenMenus] = useState<{ [key: number]: boolean }>({})
+  const navigate = useNavigate()
+  const userInfo = useAtomValue(userAtom)
+  console.log(userInfo)
+  const handleMenuClick = (item: MenuItem, idx: number) => {
+    if (item.path) {
+      navigate(item.path)
+    } else if (item.children && item.children.length > 0) {
+      setOpenMenus(prev => ({ ...prev, [idx]: !prev[idx] }))
+    }
+  }
 
-  const handleClick = (index: number) => {
-    setOpen((prev) => ({ ...prev, [index]: !prev[index] }));
-  };
+  const handleChildClick = (child: MenuChild) => {
+    if (child.path) {
+      navigate(child.path)
+    }
+  }
 
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      minHeight="100vh"
-      bgcolor="#f5f5f5"
+    <Drawer
+      variant="permanent"
+      sx={{
+        width: drawerWidth,
+        flexShrink: 0,
+        [`& .MuiDrawer-paper`]: {
+          width: drawerWidth,
+          boxSizing: 'border-box',
+          background: '#fafbfc',
+          borderRight: '1px solid #eee',
+        },
+      }}
     >
-      <Box bgcolor="#fff" p={4} borderRadius={2} boxShadow={3} minWidth={320}>
-        <Typography variant="h5" align="center" gutterBottom>
-          菜单导航
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          height: 64,
+          px: 2,
+        }}
+      >
+        <Typography variant="h6" fontWeight={700} color="text.primary">
+          管理后台
         </Typography>
-        <List component="nav">
-          {menuData.map((menu, idx) => (
-            <React.Fragment key={menu.title}>
-              {menu.children.length > 0 ? (
-                <ListItemButton onClick={() => handleClick(idx)}>
-                  <ListItemText primary={menu.title} />
-                  {open[idx] ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-              ) : (
-                <ListItem>
-                  <ListItemText primary={menu.title} />
-                </ListItem>
-              )}
-              {menu.children.length > 0 && (
-                <Collapse in={open[idx]} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                    {menu.children.map((child) => (
-                      <ListItem key={child.title} sx={{ pl: 4 }}>
-                        <ListItemText primary={child.title} />
-                      </ListItem>
-                    ))}
-                  </List>
-                </Collapse>
-              )}
-            </React.Fragment>
-          ))}
-        </List>
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+          <Avatar sx={{ width: 24, height: 24, mr: 1 }}>
+            <PersonIcon fontSize="small" />
+          </Avatar>
+          <Typography variant="body2" color="text.secondary">
+            {userInfo?.name}
+          </Typography>
+        </Box>
       </Box>
-    </Box>
-  );
-};
+      <Divider />
+      <List sx={{ flex: 1, py: 0 }}>
+        {menuList.map((menu, idx) => (
+          <React.Fragment key={menu.label}>
+            <ListItemButton onClick={() => handleMenuClick(menu, idx)}>
+              <ListItemIcon>{menu.icon}</ListItemIcon>
+              <ListItemText primary={menu.label} />
+              {menu.children && menu.children.length > 0 ? (
+                openMenus[idx] ? (
+                  <ExpandLess />
+                ) : (
+                  <ExpandMore />
+                )
+              ) : null}
+            </ListItemButton>
+            {menu.children && menu.children.length > 0 && (
+              <Collapse in={openMenus[idx]} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  {menu.children.map(child => (
+                    <ListItemButton
+                      key={child.label}
+                      sx={{ pl: 4 }}
+                      onClick={() => handleChildClick(child)}
+                    >
+                      <ListItemText primary={child.label} />
+                    </ListItemButton>
+                  ))}
+                </List>
+              </Collapse>
+            )}
+          </React.Fragment>
+        ))}
+      </List>
+    </Drawer>
+  )
+}
 
-export default MenuPage; 
+export default Menu
