@@ -28,14 +28,32 @@ const Account: React.FC = () => {
     navigate('/auth/login')
   }
 
+  const handleEdit = () => navigate('/dashboard/account/edit')
+  const handleChangePassword = () => navigate('/dashboard/account/password')
+
   return (
     <Box sx={{ background: '#f3f4f6', minHeight: '100vh' }}>
-      <Header title="我的账号" />
+      <Header title="我的账号">
+        <Box>
+          <Button onClick={handleChangePassword} variant="outlined" sx={{ mr: 2 }}>
+            修改密码
+          </Button>
+          <Button onClick={handleEdit} variant="contained">
+            编辑
+          </Button>
+        </Box>
+      </Header>
       <Box sx={{ maxWidth: 1200, mx: 'auto', mt: 2, px: 2 }}>
         <Paper elevation={1} sx={{ p: 4, minWidth: 320 }}>
           <Typography variant="h6" fontWeight={700} mb={2}>
             {user?.name}
           </Typography>
+          {user?.username && (
+            <Typography variant="body1" mb={2}>
+              <strong>姓名：</strong>
+              {user.username}
+            </Typography>
+          )}
           {user?.email && (
             <Typography variant="body1" mb={2}>
               <strong>邮箱：</strong>

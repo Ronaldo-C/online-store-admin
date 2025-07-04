@@ -6,8 +6,8 @@ import './index.css'
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      refetchOnWindowFocus: false, // 窗口获得焦点时不重新获取数据
-      retry: false, // 默认不重试
+      refetchOnWindowFocus: true, // 窗口获得焦点时不重新获取数据
+      retry: false,
     },
   },
 })
