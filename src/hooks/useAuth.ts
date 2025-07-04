@@ -4,18 +4,19 @@ import { useAtom, useSetAtom } from 'jotai'
 import { useQuery } from '@tanstack/react-query'
 import { userAtom, tokenAtom } from '@/atoms/userAtom'
 import { authService } from '../services/auth'
+import { UserResponse } from '@/types/auth'
 
 const useAuth = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const [token, setToken] = useAtom(tokenAtom)
   const setUser = useSetAtom(userAtom)
-  console.log(token)
+
   const {
     data: userInfo,
     isSuccess,
     isError,
-  } = useQuery({
+  } = useQuery<UserResponse>({
     queryKey: ['userInfo', token],
     queryFn: authService.getUserInfo,
     enabled: !!token,

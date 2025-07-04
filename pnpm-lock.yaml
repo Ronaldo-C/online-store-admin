@@ -96,6 +96,9 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
+      react-query:
+        specifier: link:@types/@tanstack/react-query
+        version: link:@types/@tanstack/react-query
       typescript:
         specifier: ~5.8.3
         version: 5.8.3

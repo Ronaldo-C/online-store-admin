@@ -1,4 +1,4 @@
-import Menu from '@/pages/Menu'
+import Menu from '@/components/Menu'
 import { Stack } from '@mui/material'
 import { Outlet } from 'react-router'
 import useAuth from '@/hooks/useAuth'
