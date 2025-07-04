@@ -20,7 +20,7 @@ import {
   ERROR_AUTH_MESSAGE_CODE,
   ERROR_NOTFOUND_MESSAGE_CODE,
   ERROR_UNAUTHORIZED_MESSAGE_CODE,
-} from '../types/error-code'
+} from '../constans/error-code'
 
 const LoginPage: React.FC = () => {
   const [formData, setFormData] = useState<LoginRequest>({
@@ -38,7 +38,7 @@ const LoginPage: React.FC = () => {
       if ('data' in data && data.data.accessToken) {
         setUser(data.data)
         setToken(data.data.accessToken)
-        navigate('/dashboard')
+        navigate('/dashboard/account')
       } else {
         setUser(null)
         setToken(null)

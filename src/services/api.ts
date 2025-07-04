@@ -1,8 +1,11 @@
 import axios from 'axios'
 
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
+export const API_PREFIX = import.meta.env.VITE_API_PREFIX as string
+
 // 创建 axios 实例
 const api = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: API_BASE_URL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',

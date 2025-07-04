@@ -90,8 +90,10 @@ const Menu: React.FC = () => {
           height: 64,
           px: 2,
         }}
+        overflow="hidden"
+        gap={2}
       >
-        <Typography variant="h6" fontWeight={700} color="text.primary">
+        <Typography variant="h6" fontWeight={700} color="text.primary" whiteSpace="nowrap">
           管理后台
         </Typography>
         <Box
@@ -105,12 +107,20 @@ const Menu: React.FC = () => {
               navigate('/dashboard/account')
             }
           }}
+          overflow="hidden"
+          gap={1}
         >
-          <Avatar sx={{ width: 24, height: 24, mr: 1 }}>
+          <Avatar sx={{ width: 24, height: 24 }}>
             <PersonIcon fontSize="small" />
           </Avatar>
-          <Typography variant="body2" color="text.secondary">
-            {userInfo?.name}
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            whiteSpace="nowrap"
+            overflow="hidden"
+            textOverflow="ellipsis"
+          >
+            {userInfo?.username || userInfo?.name}
           </Typography>
         </Box>
       </Box>
