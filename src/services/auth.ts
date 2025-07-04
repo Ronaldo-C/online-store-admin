@@ -1,5 +1,5 @@
 import api from './api'
-import type { LoginRequest, LoginResponse } from '../types/auth'
+import type { LoginRequest, LoginResponse, UserResponse } from '../types/auth'
 
 export const authService = {
   // 用户登录
@@ -8,7 +8,7 @@ export const authService = {
     return response.data
   },
   // 获取当前用户信息
-  getUserInfo: async () => {
+  getUserInfo: async (): Promise<UserResponse> => {
     const response = await api.get('/v1/admin/users/info')
     return response.data
   },

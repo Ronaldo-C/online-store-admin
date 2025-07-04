@@ -2,6 +2,7 @@ import Layout from '@/components/Layouts'
 import AuthLayout from '@/components/Layouts/AuthLayout'
 import DashboardPage from '@/pages/Dashboard'
 import LoginPage from '@/pages/Login'
+import AccountPage from '@/pages/Account'
 import { createBrowserRouter } from 'react-router'
 
 const router = createBrowserRouter([
@@ -13,7 +14,10 @@ const router = createBrowserRouter([
   {
     path: '/dashboard',
     Component: AuthLayout,
-    children: [{ path: 'dashboard', Component: DashboardPage }],
+    children: [
+      { path: 'dashboard', Component: DashboardPage },
+      { path: 'account', Component: AccountPage },
+    ],
   },
   {
     path: '*',

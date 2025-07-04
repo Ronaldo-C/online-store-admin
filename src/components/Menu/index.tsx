@@ -94,7 +94,18 @@ const Menu: React.FC = () => {
         <Typography variant="h6" fontWeight={700} color="text.primary">
           管理后台
         </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+        <Box
+          sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+          tabIndex={0}
+          aria-label="我的账号"
+          onClick={() => navigate('/dashboard/account')}
+          onKeyDown={e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault()
+              navigate('/dashboard/account')
+            }
+          }}
+        >
           <Avatar sx={{ width: 24, height: 24, mr: 1 }}>
             <PersonIcon fontSize="small" />
           </Avatar>
