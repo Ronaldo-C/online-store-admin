@@ -17,9 +17,19 @@ export enum UserRole {
   admin = 'admin',
 }
 
+export const UserRoleOptions = [
+  { label: '超级管理员', value: UserRole.superAdmin },
+  { label: '管理员', value: UserRole.admin },
+]
+
 export enum UserStatus {
   active = 'active',
   unusual = 'unusual',
   locked = 'locked',
   deleted = 'deleted',
+}
+
+export interface UpdateUserSelfRequest {
+  username: string
+  email: string
 }

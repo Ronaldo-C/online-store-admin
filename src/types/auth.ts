@@ -34,8 +34,3 @@ export interface ResetPasswordRequest {
   password: string
   updatedPassword: string
 }
-
-export interface UpdateUserSelfRequest {
-  username: string
-  email: string
-}

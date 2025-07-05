@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Typography, Paper, Button } from '@mui/material'
+import { Box, Typography, Paper, Button, Chip } from '@mui/material'
 import { useAtom, useSetAtom } from 'jotai'
 import { tokenAtom, userAtom } from '@/atoms/userAtom'
 import Header from '@/components/Header'
@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query'
 import { authService } from '@/services/auth'
 import { UserResponse } from '@/types/auth'
 import { useNavigate } from 'react-router-dom'
+import { UserRoleOptions } from '@/types/user'
 
 const Account: React.FC = () => {
   const [user, setUser] = useAtom(userAtom)
@@ -45,9 +46,16 @@ const Account: React.FC = () => {
       </Header>
       <Box sx={{ maxWidth: 1200, mx: 'auto', mt: 2, px: 2 }}>
         <Paper elevation={1} sx={{ p: 4, minWidth: 320 }}>
-          <Typography variant="h6" fontWeight={700} mb={2}>
-            {user?.name}
-          </Typography>
+          <Box display="flex" alignItems="center" gap={2} mb={2}>
+            <Typography variant="h6" fontWeight={700}>
+              {user?.name}
+            </Typography>
+            <Chip
+              label={UserRoleOptions.find(option => option.value === user?.userRole)?.label}
+              size="small"
+              color="default"
+            />
+          </Box>
           {user?.username && (
             <Typography variant="body1" mb={2}>
               <strong>姓名：</strong>
