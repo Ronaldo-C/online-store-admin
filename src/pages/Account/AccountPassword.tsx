@@ -10,6 +10,7 @@ import { useAtomValue } from 'jotai'
 import { userAtom } from '@/atoms/userAtom'
 import { ApiErrorResponse } from '@/types/common'
 import { ERROR_UNAUTHORIZED_MESSAGE_CODE } from '@/constans/error-code'
+import PageContainer from '@/components/PageContainer'
 
 interface FormData {
   password: string
@@ -58,76 +59,78 @@ const AccountPassword = () => {
   return (
     <Box>
       <Header title="修改密码" isBack />
-      <Box component="form" onSubmit={handleSubmit(onSubmit)} p={3} maxWidth={400}>
-        <Controller
-          name="password"
-          control={control}
-          rules={{
-            required: '旧密码不能为空',
-          }}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label="旧密码"
-              type="password"
-              error={!!errors.password}
-              helperText={errors.password?.message}
-              fullWidth
-              margin="normal"
-              aria-label="旧密码"
-              required
-            />
-          )}
+      <PageContainer sx={{ bgcolor: '#fff' }}>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} maxWidth={400}>
+          <Controller
+            name="password"
+            control={control}
+            rules={{
+              required: '旧密码不能为空',
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="旧密码"
+                type="password"
+                error={!!errors.password}
+                helperText={errors.password?.message}
+                fullWidth
+                margin="normal"
+                aria-label="旧密码"
+                required
+              />
+            )}
+          />
+          <Controller
+            name="updatedPassword"
+            control={control}
+            rules={{
+              required: '新密码不能为空',
+              minLength: { value: 8, message: '新密码最少8位' },
+              maxLength: { value: 20, message: '新密码最多20位' },
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="新密码"
+                type="password"
+                error={!!errors.updatedPassword}
+                helperText={errors.updatedPassword?.message}
+                fullWidth
+                margin="normal"
+                aria-label="新密码"
+                required
+              />
+            )}
+          />
+          <Controller
+            name="confirmPassword"
+            control={control}
+            rules={{
+              required: '请确认新密码',
+              validate: value => value === updatedPassword || '两次输入的新密码不一致',
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="确认新密码"
+                type="password"
+                error={!!errors.confirmPassword}
+                helperText={errors.confirmPassword?.message}
+                fullWidth
+                margin="normal"
+                aria-label="确认新密码"
+                required
+              />
+            )}
+          />
+        </Box>
+        <Footer
+          onSave={handleSubmit(onSubmit)}
+          saveLoading={mutation.isPending}
+          saveDisabled={mutation.isPending}
         />
-        <Controller
-          name="updatedPassword"
-          control={control}
-          rules={{
-            required: '新密码不能为空',
-            minLength: { value: 8, message: '新密码最少8位' },
-            maxLength: { value: 20, message: '新密码最多20位' },
-          }}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label="新密码"
-              type="password"
-              error={!!errors.updatedPassword}
-              helperText={errors.updatedPassword?.message}
-              fullWidth
-              margin="normal"
-              aria-label="新密码"
-              required
-            />
-          )}
-        />
-        <Controller
-          name="confirmPassword"
-          control={control}
-          rules={{
-            required: '请确认新密码',
-            validate: value => value === updatedPassword || '两次输入的新密码不一致',
-          }}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label="确认新密码"
-              type="password"
-              error={!!errors.confirmPassword}
-              helperText={errors.confirmPassword?.message}
-              fullWidth
-              margin="normal"
-              aria-label="确认新密码"
-              required
-            />
-          )}
-        />
-      </Box>
-      <Footer
-        onSave={handleSubmit(onSubmit)}
-        saveLoading={mutation.isPending}
-        saveDisabled={mutation.isPending}
-      />
+      </PageContainer>
     </Box>
   )
 }

@@ -5,6 +5,9 @@ import AccountPage from '@/pages/Account'
 import AccountEdit from '@/pages/Account/AccountEdit'
 import AccountPassword from '@/pages/Account/AccountPassword'
 import { createBrowserRouter } from 'react-router'
+import Admins from '@/pages/Admins'
+import CreateAdmin from '@/pages/Admins/Create'
+import EditAdmin from '@/pages/Admins/Edit'
 
 const router = createBrowserRouter([
   {
@@ -19,6 +22,9 @@ const router = createBrowserRouter([
       { path: 'account', Component: AccountPage },
       { path: 'account/edit', Component: AccountEdit },
       { path: 'account/password', Component: AccountPassword },
+      { path: 'admins', Component: Admins },
+      { path: 'admins/create', Component: CreateAdmin },
+      { path: 'admins/edit/:id', Component: EditAdmin },
     ],
   },
   {

@@ -12,3 +12,16 @@ export interface ApiErrorResponse {
   id: number
   timestamp: string
 }
+
+// 通用接口分页响应类型
+export interface ApiSuccessResponsePagination<T = unknown> {
+  id: number
+  code: number
+  data: {
+    list: T[]
+    total: number
+    totalPage: number
+    currentPage: number
+    size: number
+  }
+}

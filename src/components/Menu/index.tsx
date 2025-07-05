@@ -9,7 +9,6 @@ import {
   Avatar,
   Typography,
   Box,
-  Divider,
 } from '@mui/material'
 import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
@@ -45,7 +44,7 @@ const menuList: MenuItem[] = [
   {
     label: '管理员',
     icon: <PersonIcon />,
-    path: '/dashboard/admin',
+    path: '/dashboard/admins',
   },
 ]
 
@@ -87,8 +86,9 @@ const Menu: React.FC = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          height: 64,
+          height: 70,
           px: 2,
+          borderBottom: '1px solid #e5e6eb',
         }}
         overflow="hidden"
         gap={2}
@@ -124,7 +124,6 @@ const Menu: React.FC = () => {
           </Typography>
         </Box>
       </Box>
-      <Divider />
       <List sx={{ flex: 1, py: 0 }}>
         {menuList.map((menu, idx) => (
           <React.Fragment key={menu.label}>

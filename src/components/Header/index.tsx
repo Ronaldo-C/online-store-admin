@@ -19,7 +19,7 @@ const Header: React.FC<HeaderProps> = ({ title, isBack = false, children }) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        minHeight: 48,
+        height: '70px',
         px: 3,
         py: 2,
         borderBottom: '1px solid #e5e6eb',

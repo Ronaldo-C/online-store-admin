@@ -3,8 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { useAtom, useSetAtom } from 'jotai'
 import { useQuery } from '@tanstack/react-query'
 import { userAtom, tokenAtom } from '@/atoms/userAtom'
-import { authService } from '../services/auth'
-import { UserResponse } from '@/types/auth'
+import { userService } from '@/services/user'
+import { UserResponse } from '@/types/user'
 
 const useAuth = () => {
   const navigate = useNavigate()
@@ -18,7 +18,7 @@ const useAuth = () => {
     isError,
   } = useQuery<UserResponse>({
     queryKey: ['userInfo', token],
-    queryFn: authService.getUserInfo,
+    queryFn: userService.getUserInfo,
     enabled: !!token,
     retry: false,
   })

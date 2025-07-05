@@ -1,0 +1,39 @@
+# Admins 页面增删改查规则
+
+- 必须使用 [types/user.ts](mdc:src/types/user.ts) 中的类型定义。
+- 必须使用 [services/user.ts](mdc:src/services/user.ts) 中的接口定义。
+- 所有接口调用需通过 react-query v5 实现。
+- 表单逻辑需用 react-hook-form。
+- 操作反馈需用 react-hot-toast。
+- UI 组件全部使用 Material UI（如 Box、Button 等）。
+- 代码需遵循易读性、无重复、无遗漏、无 todo，变量命名清晰，事件函数以 handle 前缀命名。
+
+## 表格页面
+
+- 表格需显示以下字段：
+  - name
+  - username
+  - email
+  - status
+  - userRole
+  - createdAt
+- 表格最后一列为操作列，支持：
+  - 锁定/解锁账户
+  - 删除账户
+  - 编辑按钮（点击进入编辑页面）
+- 页面顶部需有搜索字段，可根据用户名、邮箱等进行搜索。
+
+## 新增编辑页面
+
+- 可以新增和修改以下字段
+  - name: 账号，只能是数字、英文字母，最小长短4位，最大长度20位
+  - username: 用户名，最大长度20位
+  - email: 邮箱，校验正确的邮箱格式
+  - userRole: 用戶角色，通过 radio 组件来选择具体权限
+- 使用公共组件组合页面
+
+description:
+globs:
+alwaysApply: false
+
+---
