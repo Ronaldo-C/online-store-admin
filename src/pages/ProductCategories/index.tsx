@@ -53,7 +53,7 @@ const ProductCategories = () => {
           <Button
             size="small"
             variant="outlined"
-            color="error"
+            color="primary"
             onClick={() => handleDelete(category.id)}
             aria-label="删除分类"
             tabIndex={0}

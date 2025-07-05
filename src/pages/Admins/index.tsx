@@ -139,7 +139,7 @@ const Admins = () => {
             <Button
               size="small"
               variant="outlined"
-              color={user.status === 'locked' ? 'success' : 'warning'}
+              color="primary"
               onClick={() => handleLock(user)}
               aria-label={user.status === 'locked' ? '解锁账户' : '锁定账户'}
               tabIndex={0}
@@ -153,7 +153,7 @@ const Admins = () => {
             <Button
               size="small"
               variant="outlined"
-              color="secondary"
+              color="primary"
               onClick={() => handleResetPassword(user.id)}
               aria-label="重置密码"
               tabIndex={0}
@@ -168,7 +168,7 @@ const Admins = () => {
             <Button
               size="small"
               variant="outlined"
-              color="error"
+              color="primary"
               onClick={() => handleDelete(user.id)}
               aria-label="删除账户"
               tabIndex={0}
