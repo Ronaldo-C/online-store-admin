@@ -7,7 +7,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '@/components/Header'
 import PageContainer from '@/components/PageContainer'
-import TableWithPagination, { ColumnType } from '@/components/common/TableWithPagination'
+import CommonTable, { ColumnType } from '@/components/common/CommonTable'
 import { StatusText, RoleText, UserStatus, UserRole } from '@/types/user'
 import SearchForm from '@/components/common/SearchForm'
 import { formatToLocalTime } from '@/utils/format'
@@ -175,7 +175,7 @@ const Admins = () => {
           searchPlaceholder="搜索用户名/邮箱"
         />
         {data && (
-          <TableWithPagination<UserData>
+          <CommonTable<UserData>
             columns={columns}
             dataSource={data.data.list}
             isLoading={isLoading}
