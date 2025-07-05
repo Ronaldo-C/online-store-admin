@@ -23,33 +23,35 @@ export interface ColumnType<T = any> {
   width?: number | string
 }
 
-export interface TableWithPaginationProps<T = any> {
+export interface CommonTableProps<T = any> {
   columns: ColumnType<T>[]
   dataSource: T[]
   isLoading: boolean
-  page: number
-  totalPage: number
-  onPageChange: (page: number) => void
+  page?: number
+  totalPage?: number
+  onPageChange?: (page: number) => void
   rowKey?: (record: T) => string
   emptyText?: React.ReactNode
-  size: number
-  onSizeChange: (size: number) => void
+  size?: number
+  onSizeChange?: (size: number) => void
   sizeOptions?: number[]
+  pagination?: boolean
 }
 
-function TableWithPagination<T = any>({
+function CommonTable<T = any>({
   columns,
   dataSource,
   isLoading,
-  page,
-  totalPage,
+  page = 1,
+  totalPage = 1,
   onPageChange,
   rowKey,
   emptyText = '暂无数据',
-  size,
+  size = 10,
   onSizeChange,
   sizeOptions = [10, 20, 50, 100],
-}: TableWithPaginationProps<T>) {
+  pagination = true,
+}: CommonTableProps<T>) {
   return (
     <>
       <TableContainer>
@@ -96,40 +98,42 @@ function TableWithPagination<T = any>({
           </TableBody>
         </Table>
       </TableContainer>
-      <Box display="flex" justifyContent="flex-end" alignItems="center" mt={3} gap={2}>
-        <FormControl size="small" sx={{ minWidth: 100, mr: 2 }}>
-          <InputLabel id="table-size-select-label">每页条数</InputLabel>
-          <Select
-            labelId="table-size-select-label"
-            value={size}
-            label="每页条数"
-            onChange={e => onSizeChange(Number(e.target.value))}
-            aria-label="每页条数选择"
-          >
-            {sizeOptions.map(opt => (
-              <MenuItem key={opt} value={opt}>
-                {opt} 条/页
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        {totalPage > 1 && (
-          <Pagination
-            count={totalPage}
-            page={page}
-            onChange={(_, value) => {
-              onPageChange(value)
-              window.scrollTo({ top: 0, behavior: 'smooth' })
-            }}
-            color="primary"
-            aria-label="分页导航"
-            showFirstButton
-            showLastButton
-          />
-        )}
-      </Box>
+      {pagination && (
+        <Box display="flex" justifyContent="flex-end" alignItems="center" mt={3} gap={2}>
+          <FormControl size="small" sx={{ minWidth: 100, mr: 2 }}>
+            <InputLabel id="table-size-select-label">每页条数</InputLabel>
+            <Select
+              labelId="table-size-select-label"
+              value={size}
+              label="每页条数"
+              onChange={e => onSizeChange && onSizeChange(Number(e.target.value))}
+              aria-label="每页条数选择"
+            >
+              {sizeOptions.map(opt => (
+                <MenuItem key={opt} value={opt}>
+                  {opt} 条/页
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          {totalPage > 1 && onPageChange && (
+            <Pagination
+              count={totalPage}
+              page={page}
+              onChange={(_, value) => {
+                onPageChange(value)
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+              }}
+              color="primary"
+              aria-label="分页导航"
+              showFirstButton
+              showLastButton
+            />
+          )}
+        </Box>
+      )}
     </>
   )
 }
 
-export default TableWithPagination
+export default CommonTable
