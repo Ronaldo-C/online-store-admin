@@ -7,12 +7,17 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '@/components/Header'
 import PageContainer from '@/components/PageContainer'
-import CommonTable, { ColumnType } from '@/components/common/CommonTable'
+import CommonTable, { ColumnType } from '@/components/CommonTable'
 import { StatusText, RoleText, UserStatus, UserRole } from '@/types/user'
-import SearchForm from '@/components/common/SearchForm'
+import SearchForm from '@/components/SearchForm'
 import { formatToLocalTime } from '@/utils/format'
 import { useAtomValue } from 'jotai'
 import { userAtom } from '@/atoms/userAtom'
+import Modal from '@/components/Modal'
+import BoxMUI from '@mui/material/Box'
+import ButtonMUI from '@mui/material/Button'
+import { CreateUserResponse } from '@/types/user'
+import { authService } from '@/services/auth'
 
 type SearchForm = {
   search: string
@@ -27,6 +32,8 @@ const Admins = () => {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const currentUser = useAtomValue(userAtom)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [newPassword, setNewPassword] = useState('')
 
   // 获取用户列表
   const { data, isLoading } = useQuery({
@@ -61,9 +68,37 @@ const Admins = () => {
     onError: () => toast.error('操作失败'),
   })
 
+  // 重置密码
+  const { mutate: handleResetPassword, isPending: isResetting } = useMutation({
+    mutationFn: (id: string) => authService.resetPassword({ userId: id }),
+    onSuccess: (res: CreateUserResponse) => {
+      setNewPassword(res?.data?.password || '')
+      setModalOpen(true)
+    },
+    onError: () => toast.error('重置失败'),
+  })
+
   // 编辑跳转
   const handleEdit = (id: string) => {
     navigate(`/dashboard/admins/edit/${id}`)
+  }
+
+  const handleCopy = async () => {
+    if (!newPassword) return
+    try {
+      await navigator.clipboard.writeText(newPassword)
+      toast.success('密码已复制')
+    } catch {
+      toast.error('复制失败')
+    }
+  }
+
+  const handleModalConfirm = () => {
+    setModalOpen(false)
+  }
+
+  const handleModalCancel = () => {
+    setModalOpen(false)
   }
 
   const columns: ColumnType<UserData>[] = [
@@ -114,6 +149,21 @@ const Admins = () => {
               }}
             >
               {user.status === 'locked' ? '解锁' : '锁定'}
+            </Button>
+            <Button
+              size="small"
+              variant="outlined"
+              color="secondary"
+              onClick={() => handleResetPassword(user.id)}
+              aria-label="重置密码"
+              tabIndex={0}
+              sx={{ ml: 1 }}
+              disabled={isResetting}
+              onKeyDown={e => {
+                if (!isSelf && (e.key === 'Enter' || e.key === ' ')) handleResetPassword(user.id)
+              }}
+            >
+              重置密码
             </Button>
             <Button
               size="small"
@@ -191,6 +241,28 @@ const Admins = () => {
           />
         )}
       </PageContainer>
+      <Modal
+        open={modalOpen}
+        title="重置密码成功"
+        description={
+          <BoxMUI display="flex" alignItems="center" gap={2}>
+            <span>新密码：{newPassword}</span>
+            <ButtonMUI
+              variant="outlined"
+              size="small"
+              onClick={handleCopy}
+              aria-label="复制密码"
+              tabIndex={0}
+            >
+              复制
+            </ButtonMUI>
+          </BoxMUI>
+        }
+        onConfirm={handleModalConfirm}
+        onCancel={handleModalCancel}
+        confirmText="确定"
+        cancelText="关闭"
+      />
     </Box>
   )
 }

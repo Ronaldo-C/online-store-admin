@@ -19,7 +19,11 @@ const EditAdmin: React.FC = () => {
     enabled: !!id,
   })
   const { mutate, isPending } = useMutation({
-    mutationFn: (form: AdminFormValues) => userService.updateUser(id!, form),
+    mutationFn: (form: AdminFormValues) =>
+      userService.updateUser(id!, {
+        ...form,
+        email: form.email || null,
+      }),
     onSuccess: () => {
       toast.success('修改成功')
       navigate('/dashboard/admins')

@@ -17,6 +17,7 @@ import PersonIcon from '@mui/icons-material/Person'
 import { useNavigate } from 'react-router'
 import { useAtomValue } from 'jotai'
 import { userAtom } from '@/atoms/userAtom'
+import { UserRole } from '@/types/user'
 
 const drawerWidth = 240
 
@@ -52,6 +53,14 @@ const Menu: React.FC = () => {
   const [openMenus, setOpenMenus] = useState<{ [key: number]: boolean }>({})
   const navigate = useNavigate()
   const userInfo = useAtomValue(userAtom)
+
+  // 根据 userRole 过滤菜单
+  const filteredMenuList = menuList.filter(menu => {
+    if (menu.label === '管理员') {
+      return userInfo?.userRole === UserRole.superAdmin
+    }
+    return true
+  })
 
   const handleMenuClick = (item: MenuItem, idx: number) => {
     if (item.path) {
@@ -125,7 +134,7 @@ const Menu: React.FC = () => {
         </Box>
       </Box>
       <List sx={{ flex: 1, py: 0 }}>
-        {menuList.map((menu, idx) => (
+        {filteredMenuList.map((menu, idx) => (
           <React.Fragment key={menu.label}>
             <ListItemButton onClick={() => handleMenuClick(menu, idx)}>
               <ListItemIcon>{menu.icon}</ListItemIcon>
