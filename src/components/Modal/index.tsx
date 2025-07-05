@@ -36,7 +36,14 @@ const Modal = ({
       <DialogTitle id="modal-title">{title}</DialogTitle>
       <DialogContent id="modal-description">{description}</DialogContent>
       <DialogActions>
-        <Button onClick={onCancel} aria-label="取消" tabIndex={0} disabled={loading}>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={onCancel}
+          aria-label="取消"
+          tabIndex={0}
+          disabled={loading}
+        >
           {cancelText}
         </Button>
         <Button

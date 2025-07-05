@@ -58,7 +58,7 @@ function SearchForm<T extends Record<string, any> = any>({
         </Button>
         <Button
           variant="outlined"
-          color="secondary"
+          color="primary"
           onClick={handleFormReset}
           aria-label="重置搜索"
           tabIndex={0}
