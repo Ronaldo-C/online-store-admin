@@ -1,0 +1,19 @@
+# 商品分类（ProductCategory）模块增删改查页面实现规范
+
+1. 商品分类相关页面（如 index.tsx、Create.tsx、Edit.tsx、ProductCategoryForm.tsx）需严格参考 [src/pages/Admins/](mdc:src/pages/Admins/) 目录下的页面风格、结构和代码逻辑实现。
+2. 商品分类列表页（index.tsx）必须展示所有分类数据，不允许有分页功能。
+3. 所有表单操作（新增、编辑）需使用 react-hook-form 管理表单状态。
+4. 数据请求全部使用 react-query v5，接口调用需通过 [src/services/product-category.ts](mdc:src/services/product-category.ts) 实现。
+5. 操作反馈（成功/失败）需使用 react-hot-toast 进行提示。
+6. UI 组件全部使用 Material UI（如 Box、Button、Table 等）。
+7. 事件函数命名需以 handle 前缀开头，变量和函数命名需语义化、类型齐全。
+8. 代码需符合易读性、可维护性、无冗余、无遗漏，遵循 DRY 原则。
+9. 商品分类类型定义需引用 [src/types/product-category.ts](mdc:src/types/product-category.ts)。
+10. 模仿 Admins [src/pages/Admins](mdc:src/pages/Admins) 功能实现。
+11. 在合适位置使用公共components [src/components](mdc:src/components) 。
+12. 代码需实现完整功能，不得留有 todo、占位符或缺失部分。
+    description:
+    globs:
+    alwaysApply: false
+
+---
