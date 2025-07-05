@@ -1,4 +1,4 @@
-import { ApiSuccessResponse } from './common'
+import { ApiSuccessResponse, ApiSuccessResponsePagination } from './common'
 
 export interface ProductCategoryData {
   id: string
@@ -13,6 +13,6 @@ export interface CreateProductCategoryRequest {
   name: string
 }
 
-export type ListProductCategoryResponse = ApiSuccessResponse<ProductCategoryData[]>
+export type ListProductCategoryResponse = ApiSuccessResponsePagination<ProductCategoryData>
 
 export type ProductCategoryResponse = ApiSuccessResponse<ProductCategoryData>

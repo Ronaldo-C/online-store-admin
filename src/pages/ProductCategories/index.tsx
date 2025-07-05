@@ -106,7 +106,7 @@ const ProductCategories = () => {
         />
         <CommonTable<ProductCategoryData>
           columns={columns}
-          dataSource={data?.data || []}
+          dataSource={data?.data?.list || []}
           isLoading={isLoading}
           pagination={false}
           rowKey={record => record.id}
