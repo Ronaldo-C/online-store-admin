@@ -1,11 +1,6 @@
 import api, { API_PREFIX } from './api'
-import type {
-  LoginRequest,
-  LoginResponse,
-  ResetPasswordRequest,
-  UpdateUserSelfRequest,
-  UserResponse,
-} from '../types/auth'
+import type { LoginRequest, LoginResponse, ResetPasswordRequest, UserResponse } from '../types/auth'
+import type { UpdateUserSelfRequest } from '@/types/user'
 
 export const authService = {
   // 用户登录
