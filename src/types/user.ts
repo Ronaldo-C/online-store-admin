@@ -1,3 +1,5 @@
+import type { ApiSuccessResponse, ApiSuccessResponsePagination } from './common'
+
 export interface UserData {
   id: string
   name: string
@@ -17,11 +19,6 @@ export enum UserRole {
   admin = 'admin',
 }
 
-export const UserRoleOptions = [
-  { label: '超级管理员', value: UserRole.superAdmin },
-  { label: '管理员', value: UserRole.admin },
-]
-
 export enum UserStatus {
   active = 'active',
   unusual = 'unusual',
@@ -29,7 +26,41 @@ export enum UserStatus {
   deleted = 'deleted',
 }
 
+export const StatusText: Record<UserStatus, string> = {
+  active: '正常',
+  unusual: '异常',
+  locked: '已锁定',
+  deleted: '已删除',
+}
+
+export const RoleText: Record<UserRole, string> = {
+  superAdmin: '超级管理员',
+  admin: '管理员',
+}
+
 export interface UpdateUserSelfRequest {
   username: string
   email: string
 }
+
+export type UserResponse = ApiSuccessResponse<UserData>
+
+// list page
+export interface UserListRequest {
+  page: number
+  size: number
+  sort?: string
+  search?: string
+}
+
+export type UserListResponse = ApiSuccessResponsePagination<UserData>
+
+// create user
+export interface CreateUserRequest {
+  name: string
+  username: string
+  email: string | null
+  userRole: UserRole
+}
+
+export type CreateUserResponse = ApiSuccessResponse<UserData & { password: string }>

@@ -27,8 +27,6 @@ export interface LoginErrorResponse extends ApiErrorResponse {
 
 export type LoginResponse = LoginSuccessResponse | LoginErrorResponse
 
-export type UserResponse = ApiSuccessResponse<Exclude<LoginData, 'accessToken'>>
-
 export interface ResetPasswordRequest {
   userId: string
   password: string

@@ -4,10 +4,11 @@ import { useAtom, useSetAtom } from 'jotai'
 import { tokenAtom, userAtom } from '@/atoms/userAtom'
 import Header from '@/components/Header'
 import { useQuery } from '@tanstack/react-query'
-import { authService } from '@/services/auth'
-import { UserResponse } from '@/types/auth'
+import { userService } from '@/services/user'
+import { UserResponse } from '@/types/user'
 import { useNavigate } from 'react-router-dom'
-import { UserRoleOptions } from '@/types/user'
+import { RoleText } from '@/types/user'
+import PageContainer from '@/components/PageContainer'
 
 const Account: React.FC = () => {
   const [user, setUser] = useAtom(userAtom)
@@ -16,7 +17,7 @@ const Account: React.FC = () => {
 
   const { data: userInfo, isSuccess } = useQuery<UserResponse>({
     queryKey: ['userInfo'],
-    queryFn: authService.getUserInfo,
+    queryFn: userService.getUserInfo,
   })
 
   if (isSuccess && userInfo?.data) {
@@ -33,7 +34,7 @@ const Account: React.FC = () => {
   const handleChangePassword = () => navigate('/dashboard/account/password')
 
   return (
-    <Box sx={{ background: '#f3f4f6', minHeight: '100vh' }}>
+    <Box>
       <Header title="我的账号">
         <Box>
           <Button onClick={handleChangePassword} variant="outlined" sx={{ mr: 2 }}>
@@ -44,17 +45,15 @@ const Account: React.FC = () => {
           </Button>
         </Box>
       </Header>
-      <Box sx={{ maxWidth: 1200, mx: 'auto', mt: 2, px: 2 }}>
-        <Paper elevation={1} sx={{ p: 4, minWidth: 320 }}>
+      <PageContainer sx={{ bgcolor: '#fff' }}>
+        <Paper elevation={0} sx={{ p: 4, minWidth: 320 }}>
           <Box display="flex" alignItems="center" gap={2} mb={2}>
             <Typography variant="h6" fontWeight={700}>
               {user?.name}
             </Typography>
-            <Chip
-              label={UserRoleOptions.find(option => option.value === user?.userRole)?.label}
-              size="small"
-              color="default"
-            />
+            {user?.userRole && (
+              <Chip label={RoleText[user.userRole]} size="small" color="default" />
+            )}
           </Box>
           {user?.username && (
             <Typography variant="body1" mb={2}>
@@ -86,7 +85,7 @@ const Account: React.FC = () => {
             </Button>
           </Box>
         </Paper>
-      </Box>
+      </PageContainer>
     </Box>
   )
 }
