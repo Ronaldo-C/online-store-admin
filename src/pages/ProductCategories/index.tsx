@@ -7,8 +7,8 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '@/components/Header'
 import PageContainer from '@/components/PageContainer'
-import CommonTable, { ColumnType } from '@/components/common/CommonTable'
-import SearchForm from '@/components/common/SearchForm'
+import CommonTable, { ColumnType } from '@/components/CommonTable'
+import SearchForm from '@/components/SearchForm'
 import { formatToLocalTime } from '@/utils/format'
 
 const ProductCategories = () => {

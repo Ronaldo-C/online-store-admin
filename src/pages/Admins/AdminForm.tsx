@@ -47,7 +47,7 @@ const AdminForm = (props: AdminFormProps) => {
     defaultValues: {
       name: '',
       username: '',
-      email: null,
+      email: '',
       userRole: UserRole.admin,
       ...defaultValues,
     },

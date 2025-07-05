@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { Box, TextField } from '@mui/material'
 import Header from '@/components/Header'
 import { useQuery, useMutation } from '@tanstack/react-query'
-import { authService } from '@/services/auth'
 import { useForm, Controller } from 'react-hook-form'
 import type { ControllerRenderProps } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
@@ -38,7 +37,7 @@ const AccountEdit = () => {
   }, [data, reset])
 
   const mutation = useMutation({
-    mutationFn: authService.updateUserSelf,
+    mutationFn: userService.updateUserSelf,
     onSuccess: () => {
       toast.success('修改成功')
       navigate('/dashboard/account')

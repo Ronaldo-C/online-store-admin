@@ -27,7 +27,7 @@ export interface LoginErrorResponse extends ApiErrorResponse {
 
 export type LoginResponse = LoginSuccessResponse | LoginErrorResponse
 
-export interface ResetPasswordRequest {
+export interface UpdateUserPasswordRequest {
   userId: string
   password: string
   updatedPassword: string

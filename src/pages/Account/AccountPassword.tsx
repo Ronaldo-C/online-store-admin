@@ -34,7 +34,7 @@ const AccountPassword = () => {
 
   const mutation = useMutation({
     mutationFn: (form: FormData) =>
-      authService.resetPassword({
+      authService.updateUserPassword({
         userId: user?.id || '',
         password: form.password,
         updatedPassword: form.updatedPassword,
