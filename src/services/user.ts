@@ -2,10 +2,10 @@ import api, { API_PREFIX } from './api'
 import type {
   CreateUserRequest,
   CreateUserResponse,
-  UserListRequest,
   UserListResponse,
   UserResponse,
 } from '@/types/user'
+import type { ListRequest } from '@/types/common'
 import type { UpdateUserSelfRequest } from '@/types/user'
 
 export const userService = {
@@ -20,7 +20,7 @@ export const userService = {
     return response.data
   },
   // 用户列表
-  getUsers: async (data: UserListRequest): Promise<UserListResponse> => {
+  getUsers: async (data: ListRequest): Promise<UserListResponse> => {
     const response = await api.get(`${API_PREFIX}/users`, { params: data })
     return response.data
   },

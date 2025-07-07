@@ -11,6 +11,9 @@ import EditAdmin from '@/pages/Admins/Edit'
 import ProductCategories from '@/pages/ProductCategories'
 import CreateProductCategory from '@/pages/ProductCategories/Create'
 import EditProductCategory from '@/pages/ProductCategories/Edit'
+import Product from '@/pages/Product'
+import CreateProduct from '@/pages/Product/Create'
+import EditProduct from '@/pages/Product/Edit'
 
 const router = createBrowserRouter([
   {
@@ -31,6 +34,9 @@ const router = createBrowserRouter([
       { path: 'product-categories', Component: ProductCategories },
       { path: 'product-categories/create', Component: CreateProductCategory },
       { path: 'product-categories/edit/:id', Component: EditProductCategory },
+      { path: 'products', Component: Product },
+      { path: 'products/create', Component: CreateProduct },
+      { path: 'products/edit/:id', Component: EditProduct },
     ],
   },
   {

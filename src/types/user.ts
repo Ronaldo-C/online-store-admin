@@ -45,14 +45,6 @@ export interface UpdateUserSelfRequest {
 
 export type UserResponse = ApiSuccessResponse<UserData>
 
-// list page
-export interface UserListRequest {
-  page: number
-  size: number
-  sort?: string
-  search?: string
-}
-
 export type UserListResponse = ApiSuccessResponsePagination<UserData>
 
 // create user
