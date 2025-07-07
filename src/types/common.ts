@@ -25,3 +25,10 @@ export interface ApiSuccessResponsePagination<T = unknown> {
     size: number
   }
 }
+
+export interface ListRequest {
+  page: number
+  size: number
+  sort?: string
+  search?: string
+}
