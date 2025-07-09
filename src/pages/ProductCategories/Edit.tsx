@@ -48,11 +48,7 @@ const EditProductCategory: React.FC = () => {
           onSubmit={values => mutate(values)}
           loading={isPending || isLoading}
         />
-        <Footer
-          onSave={() => formRef.current?.submit()}
-          saveLoading={isPending || isLoading}
-          saveDisabled={isPending || isLoading}
-        />
+        <Footer onSave={() => formRef.current?.submit()} saveLoading={isPending || isLoading} />
       </PageContainer>
     </>
   )

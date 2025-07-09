@@ -34,11 +34,7 @@ const CreateProductCategory: React.FC = () => {
           onSubmit={values => mutate(values)}
           loading={isPending}
         />
-        <Footer
-          onSave={() => formRef.current?.submit()}
-          saveLoading={isPending}
-          saveDisabled={isPending}
-        />
+        <Footer onSave={() => formRef.current?.submit()} saveLoading={isPending} />
       </PageContainer>
     </>
   )

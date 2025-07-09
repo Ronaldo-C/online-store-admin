@@ -13,11 +13,13 @@ import type { AdminFormRef } from './AdminForm'
 const EditAdmin: React.FC = () => {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+
   const { data, isLoading } = useQuery({
     queryKey: ['admin', id],
     queryFn: () => userService.getUser(id!),
     enabled: !!id,
   })
+
   const { mutate, isPending } = useMutation({
     mutationFn: (form: AdminFormValues) =>
       userService.updateUser(id!, {
@@ -52,11 +54,7 @@ const EditAdmin: React.FC = () => {
           onSubmit={values => mutate(values)}
           loading={isPending || isLoading}
         />
-        <Footer
-          onSave={() => formRef.current?.submit()}
-          saveLoading={isPending || isLoading}
-          saveDisabled={isPending || isLoading}
-        />
+        <Footer onSave={() => formRef.current?.submit()} saveLoading={isPending || isLoading} />
       </PageContainer>
     </>
   )

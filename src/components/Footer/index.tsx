@@ -1,4 +1,5 @@
 import { Box, Button } from '@mui/material'
+import { LoadingButton } from '@mui/lab'
 import { useNavigate } from 'react-router-dom'
 
 interface FooterProps {
@@ -7,7 +8,6 @@ interface FooterProps {
   saveLoading?: boolean
   cancelText?: string
   saveText?: string
-  saveDisabled?: boolean
 }
 
 const Footer = ({
@@ -16,7 +16,6 @@ const Footer = ({
   saveLoading = false,
   cancelText = '取消',
   saveText = '保存',
-  saveDisabled = false,
 }: FooterProps) => {
   const navigate = useNavigate()
   const handleCancel = () => {
@@ -37,16 +36,16 @@ const Footer = ({
       >
         {cancelText}
       </Button>
-      <Button
+      <LoadingButton
+        loading={saveLoading}
         variant="contained"
         color="primary"
         onClick={onSave}
         aria-label={saveText}
         tabIndex={0}
-        disabled={saveDisabled || saveLoading}
       >
         {saveLoading ? '保存中...' : saveText}
-      </Button>
+      </LoadingButton>
     </Box>
   )
 }

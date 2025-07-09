@@ -56,11 +56,7 @@ const CreateAdmin: React.FC = () => {
       <Header title="新增管理员" isBack />
       <PageContainer sx={{ bgcolor: '#fff', p: 3 }}>
         <AdminForm ref={formRef} onSubmit={values => mutate(values)} loading={isPending} />
-        <Footer
-          onSave={() => formRef.current?.submit()}
-          saveLoading={isPending}
-          saveDisabled={isPending}
-        />
+        <Footer onSave={() => formRef.current?.submit()} saveLoading={isPending} />
       </PageContainer>
       <Modal
         open={modalOpen}

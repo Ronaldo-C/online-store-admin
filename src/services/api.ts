@@ -1,15 +1,12 @@
 import axios from 'axios'
 
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string
-export const API_PREFIX = import.meta.env.VITE_API_PREFIX as string
+export const VITE_API_VERSION = import.meta.env.VITE_API_VERSION as string
+export const API_PREFIX = `/${VITE_API_VERSION}/admin`
 
 // 创建 axios 实例
 const api = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 10000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
 })
 
 api.interceptors.request.use(
