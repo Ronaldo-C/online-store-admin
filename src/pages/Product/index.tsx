@@ -1,56 +1,21 @@
-import React from 'react'
-import { Box, Button, Chip, MenuItem, TextField, Avatar } from '@mui/material'
+import { Box, Button, Chip, Avatar } from '@mui/material'
 import Header from '@/components/Header'
 import PageContainer from '@/components/PageContainer'
 import SearchForm from '@/components/SearchForm'
 import CommonTable, { ColumnType } from '@/components/CommonTable'
 import { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
+import toast from 'react-hot-toast'
 import { productService } from '@/services/product'
-import { productCategoryService } from '@/services/product-category'
 import type { ProductData } from '@/types/product'
 import { formatToLocalTime } from '@/utils/format'
 import { useNavigate } from 'react-router-dom'
-import { Controller, useFormContext } from 'react-hook-form'
+import CategoryMultiSelectForSearch from './components/CategoryMultiSelectForSearch'
 
 // 搜索表单字段类型
-interface ProductSearchForm {
+export interface ProductSearchForm {
   search: string
   categoryIds: string[]
-}
-
-// 商品分类选择字段组件
-const CategoryMultiSelect: React.FC<{ options: { id: string; name: string }[] }> = ({
-  options,
-}) => {
-  // 通过 useFormContext 获取控制器
-  const { control } = useFormContext<ProductSearchForm>()
-
-  return (
-    <Controller
-      name="categoryIds"
-      control={control}
-      defaultValue={[]}
-      render={({ field }) => (
-        <TextField
-          {...field}
-          select
-          label="商品分类"
-          size="small"
-          variant="outlined"
-          SelectProps={{ multiple: true }}
-          sx={{ minWidth: 240 }}
-          inputProps={{ 'aria-label': '商品分类筛选', tabIndex: 0 }}
-        >
-          {options.map(option => (
-            <MenuItem key={option.id} value={option.id}>
-              {option.name}
-            </MenuItem>
-          ))}
-        </TextField>
-      )}
-    />
-  )
 }
 
 export default function ProductList() {
@@ -59,12 +24,23 @@ export default function ProductList() {
   const [searchValue, setSearchValue] = useState('')
   const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>([])
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
-  // 获取商品分类，用于搜索下拉
-  const { data: categoryData, isLoading: isCategoryLoading } = useQuery({
-    queryKey: ['product-categories', 'all'],
-    queryFn: () => productCategoryService.getProductCategories({}),
+  // 删除商品
+  const { mutate: deleteProduct, isPending: isDeleting } = useMutation({
+    mutationFn: (id: string) => productService.deleteProduct(id),
+    onSuccess: () => {
+      toast.success('删除成功')
+      queryClient.invalidateQueries({ queryKey: ['products'] })
+    },
+    onError: () => {
+      toast.error('删除失败')
+    },
   })
+
+  const handleDelete = (id: string | number | bigint) => {
+    deleteProduct(String(id))
+  }
 
   // 获取商品列表
   const { data: productData, isLoading: isProductLoading } = useQuery({
@@ -77,6 +53,14 @@ export default function ProductList() {
         categoryIds: selectedCategoryIds.join(','),
       }),
   })
+
+  const handleCreate = () => {
+    navigate('/dashboard/products/create')
+  }
+
+  const handleEdit = (id: string | number | bigint) => {
+    navigate(`/dashboard/products/edit/${String(id)}`)
+  }
 
   const columns: ColumnType<ProductData>[] = [
     {
@@ -106,11 +90,42 @@ export default function ProductList() {
       dataIndex: 'updatedAt',
       render: v => formatToLocalTime(String(v)),
     },
+    {
+      title: '操作',
+      dataIndex: 'actions',
+      render: (_, record) => (
+        <Box sx={{ display: 'flex', gap: 1 }}>
+          <Button
+            variant="outlined"
+            color="primary"
+            size="small"
+            aria-label="删除商品"
+            tabIndex={0}
+            onClick={() => handleDelete(record.id)}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') handleDelete(record.id)
+            }}
+            disabled={isDeleting}
+          >
+            删除
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            aria-label="编辑商品"
+            tabIndex={0}
+            onClick={() => handleEdit(record.id)}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') handleEdit(record.id)
+            }}
+          >
+            编辑
+          </Button>
+        </Box>
+      ),
+    },
   ]
-
-  const handleCreate = () => {
-    navigate('/dashboard/products/create')
-  }
 
   return (
     <Box>
@@ -133,8 +148,8 @@ export default function ProductList() {
           }}
           defaultValues={{ search: '', categoryIds: [] }}
           searchPlaceholder="搜索商品名称/编号"
-          fields={<CategoryMultiSelect options={categoryData?.data?.list || []} />}
-          loading={isProductLoading || isCategoryLoading}
+          fields={<CategoryMultiSelectForSearch />}
+          loading={isProductLoading}
         />
         {productData && (
           <CommonTable<ProductData>

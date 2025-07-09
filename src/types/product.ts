@@ -47,8 +47,13 @@ export interface CreateProductRequest {
   number: string
   shelfStatus: boolean
   thumbnail: string
-  pictures: string[]
-  description: OutputData
-  skus: ProductSku[]
-  categories: string[]
+  pictures?: string[]
+  description?: OutputData
+  skus: {
+    name: string
+    costPrice: number
+    price: number
+    stock: number
+  }[]
+  categoryIds: string[]
 }

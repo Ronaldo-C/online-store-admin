@@ -1,0 +1,19 @@
+# 商品（Product）模块增删改查页面实现规范
+
+1. 商品分类相关页面（如 index.tsx、Create.tsx、Edit.tsx、ProductForm.tsx）需严格参考 [src/pages/Admins/](mdc:src/pages/Admins/) 目录下的页面风格、结构和代码逻辑实现。
+2. 所有表单操作（新增、编辑）需使用 react-hook-form 管理表单状态。
+3. 数据请求全部使用 react-query v5，接口调用需通过 [src/services/product.ts](mdc:src/services/product.ts) 实现。
+4. 操作反馈（成功/失败）需使用 react-hot-toast 进行提示。
+5. UI 组件全部使用 Material UI（如 Box、Button、Table 等）。
+6. 事件函数命名需以 handle 前缀开头，变量和函数命名需语义化、类型齐全。
+7. 代码需符合易读性、可维护性、无冗余、无遗漏，遵循 DRY 原则。
+8. 商品分类类型定义需引用 [src/types/product.ts](mdc:src/types/product.ts)。
+9. 模仿 Admins [src/pages/Admins](mdc:src/pages/Admins) 功能实现。
+10. 在合适位置使用公共components [src/components](mdc:src/components) 。
+11. shelfStatus 使用 radio 组件，默认为 true；thumbnail 使用 component/Image组件，为单选图片；pictures 使用 component/Image组件，为多选图片；description 使用 component/Editor 组件；categories 为多选框，使用商品分类数据；skus 是一个数组字段，可以新增删除，并且至少有一条数据。
+12. 代码需实现完整功能，不得留有 todo、占位符或缺失部分。
+    description:
+    globs:
+    alwaysApply: false
+
+---

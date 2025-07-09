@@ -100,11 +100,7 @@ const AccountEdit = () => {
           />
         </Box>
       </PageContainer>
-      <Footer
-        onSave={handleSubmit(onSubmit)}
-        saveLoading={mutation.isPending}
-        saveDisabled={mutation.isPending}
-      />
+      <Footer onSave={handleSubmit(onSubmit)} saveLoading={mutation.isPending} />
     </Box>
   )
 }

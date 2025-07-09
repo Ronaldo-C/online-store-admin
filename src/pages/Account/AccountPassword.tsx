@@ -125,11 +125,7 @@ const AccountPassword = () => {
             )}
           />
         </Box>
-        <Footer
-          onSave={handleSubmit(onSubmit)}
-          saveLoading={mutation.isPending}
-          saveDisabled={mutation.isPending}
-        />
+        <Footer onSave={handleSubmit(onSubmit)} saveLoading={mutation.isPending} />
       </PageContainer>
     </Box>
   )

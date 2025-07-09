@@ -1,0 +1,5 @@
+declare module 'editorjs-header-with-alignment'
+declare module '@editorjs/list'
+declare module 'editorjs-indent-tune'
+declare module 'editorjs-text-color-plugin'
+declare module '@editorjs/image'
