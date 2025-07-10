@@ -14,6 +14,7 @@ import EditProductCategory from '@/pages/ProductCategories/Edit'
 import Product from '@/pages/Product'
 import CreateProduct from '@/pages/Product/Create'
 import EditProduct from '@/pages/Product/Edit'
+import SeoMetas from '@/pages/SeoMetas'
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
       { path: 'products', Component: Product },
       { path: 'products/create', Component: CreateProduct },
       { path: 'products/edit/:id', Component: EditProduct },
+      { path: 'seo-metas', Component: SeoMetas },
     ],
   },
   {

@@ -152,7 +152,6 @@ export default function Editor({
     }
 
     return () => {
-      console.log(ejInstance?.current)
       ejInstance?.current?.clear()
       ejInstance?.current?.destroy()
       ejInstance.current = null

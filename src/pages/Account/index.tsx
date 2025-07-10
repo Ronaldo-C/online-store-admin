@@ -46,7 +46,7 @@ const Account: React.FC = () => {
         </Box>
       </Header>
       <PageContainer sx={{ bgcolor: '#fff' }}>
-        <Paper elevation={0} sx={{ p: 4, minWidth: 320 }}>
+        <Paper elevation={0} sx={{ minWidth: 320 }}>
           <Box display="flex" alignItems="center" gap={2} mb={2}>
             <Typography variant="h6" fontWeight={700}>
               {user?.name}

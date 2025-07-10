@@ -43,6 +43,11 @@ const menuList: MenuItem[] = [
     ],
   },
   {
+    label: '商城管理',
+    icon: <StoreIcon />,
+    children: [{ label: 'SEO 管理', path: '/dashboard/seo-metas' }],
+  },
+  {
     label: '管理员',
     icon: <PersonIcon />,
     path: '/dashboard/admins',
