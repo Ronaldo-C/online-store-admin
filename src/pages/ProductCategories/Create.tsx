@@ -9,6 +9,8 @@ import PageContainer from '@/components/PageContainer'
 import Footer from '@/components/Footer'
 import type { ProductCategoryFormRef } from './ProductCategoryForm'
 import { productCategoryService } from '@/services/product-category'
+import { ApiErrorResponse } from '@/types/common'
+import { ERROR_CONFLICT_MESSAGE_CODE } from '@/constans/error-code'
 
 const CreateProductCategory: React.FC = () => {
   const navigate = useNavigate()
@@ -20,7 +22,14 @@ const CreateProductCategory: React.FC = () => {
       toast.success('新增成功')
       navigate('/dashboard/product-categories')
     },
-    onError: () => toast.error('新增失败'),
+    onError: error => {
+      const err = error as { response?: { data?: ApiErrorResponse } }
+      if (err.response?.data?.msg === `name|${ERROR_CONFLICT_MESSAGE_CODE.DUPLICATE_SLUG}`) {
+        toast.error('商品分类名称已存在')
+        return
+      }
+      toast.error('新增失败')
+    },
   })
 
   const formRef = useRef<ProductCategoryFormRef>(null)

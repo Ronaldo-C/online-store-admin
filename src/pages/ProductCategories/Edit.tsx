@@ -9,6 +9,8 @@ import PageContainer from '@/components/PageContainer'
 import Footer from '@/components/Footer'
 import type { ProductCategoryFormRef } from './ProductCategoryForm'
 import { productCategoryService } from '@/services/product-category'
+import { ERROR_CONFLICT_MESSAGE_CODE } from '@/constans/error-code'
+import { ApiErrorResponse } from '@/types/common'
 
 const EditProductCategory: React.FC = () => {
   const { id } = useParams<{ id: string }>()
@@ -27,7 +29,14 @@ const EditProductCategory: React.FC = () => {
       toast.success('修改成功')
       navigate('/dashboard/product-categories')
     },
-    onError: () => toast.error('修改失败'),
+    onError: error => {
+      const err = error as { response?: { data?: ApiErrorResponse } }
+      if (err.response?.data?.msg === `name|${ERROR_CONFLICT_MESSAGE_CODE.DUPLICATE_SLUG}`) {
+        toast.error('商品分类名称已存在')
+        return
+      }
+      toast.error('修改失败')
+    },
   })
 
   const defaultValues = data?.data
