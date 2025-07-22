@@ -6,14 +6,14 @@ import Header from '@/components/Header'
 import { useQuery } from '@tanstack/react-query'
 import { userService } from '@/services/user'
 import { UserResponse } from '@/types/user'
-import { useNavigate } from 'react-router-dom'
 import { RoleText } from '@/types/user'
 import PageContainer from '@/components/PageContainer'
+import useCustomNavigate from '@/hooks/useCustomNavigate'
 
 const Account: React.FC = () => {
   const [user, setUser] = useAtom(userAtom)
   const setToken = useSetAtom(tokenAtom)
-  const navigate = useNavigate()
+  const navigate = useCustomNavigate()
 
   const { data: userInfo, isSuccess } = useQuery<UserResponse>({
     queryKey: ['userInfo'],

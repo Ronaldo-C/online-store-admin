@@ -1,5 +1,5 @@
 import React, { useRef, useMemo } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import ProductForm, { ProductFormRef, ProductFormValues } from './ProductForm'
 import Header from '@/components/Header'
@@ -12,9 +12,10 @@ import { assetService } from '@/services/asset'
 import { CreateProductRequest } from '@/types/product'
 import { ApiErrorResponse } from '@/types/common'
 import { ERROR_CONFLICT_MESSAGE_CODE } from '@/constans/error-code'
+import useCustomNavigate from '@/hooks/useCustomNavigate'
 
 const EditProduct: React.FC = () => {
-  const navigate = useNavigate()
+  const navigate = useCustomNavigate()
   const { id } = useParams<{ id: string }>()
   const formRef = useRef<ProductFormRef>(null)
   const queryClient = useQueryClient()

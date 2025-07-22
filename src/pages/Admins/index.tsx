@@ -4,7 +4,6 @@ import { userService } from '@/services/user'
 import type { UserData } from '@/types/user'
 import toast from 'react-hot-toast'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import Header from '@/components/Header'
 import PageContainer from '@/components/PageContainer'
 import CommonTable, { ColumnType } from '@/components/CommonTable'
@@ -18,6 +17,7 @@ import BoxMUI from '@mui/material/Box'
 import ButtonMUI from '@mui/material/Button'
 import { CreateUserResponse } from '@/types/user'
 import { authService } from '@/services/auth'
+import useCustomNavigate from '@/hooks/useCustomNavigate'
 
 type SearchForm = {
   search: string
@@ -30,7 +30,7 @@ const Admins = () => {
   const [sortField, setSortField] = useState<string>('createdAt')
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc')
   const queryClient = useQueryClient()
-  const navigate = useNavigate()
+  const navigate = useCustomNavigate()
   const currentUser = useAtomValue(userAtom)
   const [modalOpen, setModalOpen] = useState(false)
   const [newPassword, setNewPassword] = useState('')

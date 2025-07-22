@@ -1,6 +1,6 @@
 import { Box, Button } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
-import { useNavigate } from 'react-router-dom'
+import useCustomNavigate from '@/hooks/useCustomNavigate'
 
 interface FooterProps {
   onCancel?: () => void
@@ -17,7 +17,7 @@ const Footer = ({
   cancelText = '取消',
   saveText = '保存',
 }: FooterProps) => {
-  const navigate = useNavigate()
+  const navigate = useCustomNavigate()
   const handleCancel = () => {
     if (onCancel) {
       onCancel()

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import ProductCategoryForm from './ProductCategoryForm'
@@ -11,10 +11,11 @@ import type { ProductCategoryFormRef } from './ProductCategoryForm'
 import { productCategoryService } from '@/services/product-category'
 import { ERROR_CONFLICT_MESSAGE_CODE } from '@/constans/error-code'
 import { ApiErrorResponse } from '@/types/common'
+import useCustomNavigate from '@/hooks/useCustomNavigate'
 
 const EditProductCategory: React.FC = () => {
   const { id } = useParams<{ id: string }>()
-  const navigate = useNavigate()
+  const navigate = useCustomNavigate()
 
   const { data, isLoading } = useQuery({
     queryKey: ['product-category', id],

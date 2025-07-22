@@ -1,5 +1,4 @@
 import React, { useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import ProductCategoryForm from './ProductCategoryForm'
@@ -11,9 +10,10 @@ import type { ProductCategoryFormRef } from './ProductCategoryForm'
 import { productCategoryService } from '@/services/product-category'
 import { ApiErrorResponse } from '@/types/common'
 import { ERROR_CONFLICT_MESSAGE_CODE } from '@/constans/error-code'
+import useCustomNavigate from '@/hooks/useCustomNavigate'
 
 const CreateProductCategory: React.FC = () => {
-  const navigate = useNavigate()
+  const navigate = useCustomNavigate()
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: CreateProductCategoryRequest) =>

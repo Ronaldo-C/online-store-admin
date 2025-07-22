@@ -1,13 +1,14 @@
 import { useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { useAtom, useSetAtom } from 'jotai'
 import { useQuery } from '@tanstack/react-query'
 import { userAtom, tokenAtom } from '@/atoms/userAtom'
 import { userService } from '@/services/user'
 import { UserResponse } from '@/types/user'
+import useCustomNavigate from './useCustomNavigate'
 
 const useAuth = () => {
-  const navigate = useNavigate()
+  const navigate = useCustomNavigate()
   const location = useLocation()
   const [token, setToken] = useAtom(tokenAtom)
   const setUser = useSetAtom(userAtom)
@@ -27,7 +28,7 @@ const useAuth = () => {
     if (!token) {
       setUser(null)
       setToken(null)
-      if (location.pathname !== '/auth/login') {
+      if (location.pathname !== '/admin/auth/login') {
         navigate('/auth/login', { replace: true })
       }
     }
@@ -36,14 +37,14 @@ const useAuth = () => {
   useEffect(() => {
     if (isSuccess && userInfo?.data) {
       setUser(userInfo.data)
-      if (location.pathname === '/auth/login') {
+      if (location.pathname === '/admin/auth/login') {
         navigate('/dashboard', { replace: true })
       }
     }
     if (isError) {
       setUser(null)
       setToken(null)
-      if (location.pathname !== '/auth/login') {
+      if (location.pathname !== '/admin/auth/login') {
         navigate('/auth/login', { replace: true })
       }
     }

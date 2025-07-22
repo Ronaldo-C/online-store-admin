@@ -5,11 +5,11 @@ import { useQuery, useMutation } from '@tanstack/react-query'
 import { useForm, Controller } from 'react-hook-form'
 import type { ControllerRenderProps } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom'
 import Footer from '@/components/Footer'
 import { EMAIL_REGEX } from '@/constans/regex'
 import { userService } from '@/services/user'
 import PageContainer from '@/components/PageContainer'
+import useCustomNavigate from '@/hooks/useCustomNavigate'
 
 interface FormData {
   username: string
@@ -17,7 +17,7 @@ interface FormData {
 }
 
 const AccountEdit = () => {
-  const navigate = useNavigate()
+  const navigate = useCustomNavigate()
   const { data } = useQuery({ queryKey: ['userInfo'], queryFn: userService.getUserInfo })
 
   const {

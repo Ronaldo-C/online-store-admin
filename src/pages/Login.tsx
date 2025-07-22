@@ -12,7 +12,6 @@ import {
 import { useMutation } from '@tanstack/react-query'
 import { authService } from '../services/auth'
 import type { LoginRequest } from '../types/auth'
-import { useNavigate } from 'react-router'
 import type { ApiErrorResponse } from '../types/common'
 import { useSetAtom } from 'jotai'
 import { userAtom, tokenAtom } from '@/atoms/userAtom'
@@ -21,6 +20,7 @@ import {
   ERROR_NOTFOUND_MESSAGE_CODE,
   ERROR_UNAUTHORIZED_MESSAGE_CODE,
 } from '../constans/error-code'
+import useCustomNavigate from '@/hooks/useCustomNavigate'
 
 const LoginPage: React.FC = () => {
   const [formData, setFormData] = useState<LoginRequest>({
@@ -28,7 +28,7 @@ const LoginPage: React.FC = () => {
     password: '',
   })
   const [error, setError] = useState<string>('')
-  const navigate = useNavigate()
+  const navigate = useCustomNavigate()
   const setUser = useSetAtom(userAtom)
   const setToken = useSetAtom(tokenAtom)
 

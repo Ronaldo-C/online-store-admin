@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import AdminForm, { AdminFormValues } from './AdminForm'
@@ -9,10 +9,11 @@ import PageContainer from '@/components/PageContainer'
 import Footer from '@/components/Footer'
 import { useRef } from 'react'
 import type { AdminFormRef } from './AdminForm'
+import useCustomNavigate from '@/hooks/useCustomNavigate'
 
 const EditAdmin: React.FC = () => {
   const { id } = useParams<{ id: string }>()
-  const navigate = useNavigate()
+  const navigate = useCustomNavigate()
 
   const { data, isLoading } = useQuery({
     queryKey: ['admin', id],
