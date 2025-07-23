@@ -24,8 +24,8 @@ import useCustomNavigate from '@/hooks/useCustomNavigate'
 
 const LoginPage: React.FC = () => {
   const [formData, setFormData] = useState<LoginRequest>({
-    name: '',
-    password: '',
+    name: 'admin',
+    password: '123456',
   })
   const [error, setError] = useState<string>('')
   const navigate = useCustomNavigate()
