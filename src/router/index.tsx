@@ -16,35 +16,40 @@ import CreateProduct from '@/pages/Product/Create'
 import EditProduct from '@/pages/Product/Edit'
 import SeoMetas from '@/pages/SeoMetas'
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: '/auth',
+      Component: Layout,
+      children: [{ path: 'login', Component: LoginPage }],
+    },
+    {
+      path: '/dashboard',
+      Component: AuthLayout,
+      children: [
+        { path: 'account', Component: AccountPage },
+        { path: 'account/edit', Component: AccountEdit },
+        { path: 'account/password', Component: AccountPassword },
+        { path: 'admins', Component: Admins },
+        { path: 'admins/create', Component: CreateAdmin },
+        { path: 'admins/edit/:id', Component: EditAdmin },
+        { path: 'product-categories', Component: ProductCategories },
+        { path: 'product-categories/create', Component: CreateProductCategory },
+        { path: 'product-categories/edit/:id', Component: EditProductCategory },
+        { path: 'products', Component: Product },
+        { path: 'products/create', Component: CreateProduct },
+        { path: 'products/edit/:id', Component: EditProduct },
+        { path: 'seo-metas', Component: SeoMetas },
+      ],
+    },
+    {
+      path: '*',
+      Component: LoginPage,
+    },
+  ],
   {
-    path: '/auth',
-    Component: Layout,
-    children: [{ path: 'login', Component: LoginPage }],
-  },
-  {
-    path: '/dashboard',
-    Component: AuthLayout,
-    children: [
-      { path: 'account', Component: AccountPage },
-      { path: 'account/edit', Component: AccountEdit },
-      { path: 'account/password', Component: AccountPassword },
-      { path: 'admins', Component: Admins },
-      { path: 'admins/create', Component: CreateAdmin },
-      { path: 'admins/edit/:id', Component: EditAdmin },
-      { path: 'product-categories', Component: ProductCategories },
-      { path: 'product-categories/create', Component: CreateProductCategory },
-      { path: 'product-categories/edit/:id', Component: EditProductCategory },
-      { path: 'products', Component: Product },
-      { path: 'products/create', Component: CreateProduct },
-      { path: 'products/edit/:id', Component: EditProduct },
-      { path: 'seo-metas', Component: SeoMetas },
-    ],
-  },
-  {
-    path: '*',
-    Component: LoginPage,
-  },
-])
+    basename: '/admin',
+  }
+)
 
 export default router
