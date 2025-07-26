@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Typography, IconButton } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import useCustomNavigate from '@/hooks/useCustomNavigate'
+import { useNavigate } from 'react-router-dom'
 
 interface HeaderProps {
   title: string
@@ -10,7 +10,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ title, isBack = false, children }) => {
-  const navigate = useCustomNavigate()
+  const navigate = useNavigate()
   const handleBack = () => navigate(-1)
 
   return (

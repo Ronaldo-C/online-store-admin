@@ -4,13 +4,13 @@ import { toast } from 'react-hot-toast'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import { authService } from '@/services/auth'
+import { useNavigate } from 'react-router-dom'
 import { Box, TextField } from '@mui/material'
 import { useAtomValue } from 'jotai'
 import { userAtom } from '@/atoms/userAtom'
 import { ApiErrorResponse } from '@/types/common'
 import { ERROR_UNAUTHORIZED_MESSAGE_CODE } from '@/constans/error-code'
 import PageContainer from '@/components/PageContainer'
-import useCustomNavigate from '@/hooks/useCustomNavigate'
 
 interface FormData {
   password: string
@@ -19,7 +19,7 @@ interface FormData {
 }
 
 const AccountPassword = () => {
-  const navigate = useCustomNavigate()
+  const navigate = useNavigate()
   const user = useAtomValue(userAtom)
 
   const {

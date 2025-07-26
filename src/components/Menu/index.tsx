@@ -14,10 +14,10 @@ import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
 import StoreIcon from '@mui/icons-material/Store'
 import PersonIcon from '@mui/icons-material/Person'
+import { useNavigate } from 'react-router'
 import { useAtomValue } from 'jotai'
 import { userAtom } from '@/atoms/userAtom'
 import { UserRole } from '@/types/user'
-import useCustomNavigate from '@/hooks/useCustomNavigate'
 
 const drawerWidth = 240
 
@@ -56,7 +56,7 @@ const menuList: MenuItem[] = [
 
 const Menu: React.FC = () => {
   const [openMenus, setOpenMenus] = useState<{ [key: number]: boolean }>({})
-  const navigate = useCustomNavigate()
+  const navigate = useNavigate()
   const userInfo = useAtomValue(userAtom)
 
   // 根据 userRole 过滤菜单

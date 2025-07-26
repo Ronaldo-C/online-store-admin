@@ -9,8 +9,8 @@ import toast from 'react-hot-toast'
 import { productService } from '@/services/product'
 import type { ProductData } from '@/types/product'
 import { formatToLocalTime } from '@/utils/format'
+import { useNavigate } from 'react-router-dom'
 import CategoryMultiSelectForSearch from './components/CategoryMultiSelectForSearch'
-import useCustomNavigate from '@/hooks/useCustomNavigate'
 
 // 搜索表单字段类型
 export interface ProductSearchForm {
@@ -23,7 +23,7 @@ export default function ProductList() {
   const [size, setSize] = useState(10)
   const [searchValue, setSearchValue] = useState('')
   const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>([])
-  const navigate = useCustomNavigate()
+  const navigate = useNavigate()
   const queryClient = useQueryClient()
 
   // 删除商品

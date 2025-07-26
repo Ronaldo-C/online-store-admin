@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import AdminForm, { AdminFormValues } from './AdminForm'
@@ -11,10 +12,9 @@ import Modal from '@/components/Modal'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import { CreateUserResponse } from '@/types/user'
-import useCustomNavigate from '@/hooks/useCustomNavigate'
 
 const CreateAdmin: React.FC = () => {
-  const navigate = useCustomNavigate()
+  const navigate = useNavigate()
   const [modalOpen, setModalOpen] = useState(false)
   const [newPassword, setNewPassword] = useState('')
   const formRef = useRef<AdminFormRef>(null)

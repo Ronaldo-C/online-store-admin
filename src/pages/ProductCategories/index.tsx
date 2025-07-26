@@ -4,17 +4,17 @@ import { productCategoryService } from '@/services/product-category'
 import type { ProductCategoryData } from '@/types/product-category'
 import toast from 'react-hot-toast'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Header from '@/components/Header'
 import PageContainer from '@/components/PageContainer'
 import CommonTable, { ColumnType } from '@/components/CommonTable'
 import SearchForm from '@/components/SearchForm'
 import { formatToLocalTime } from '@/utils/format'
-import useCustomNavigate from '@/hooks/useCustomNavigate'
 
 const ProductCategories = () => {
   const [searchValue, setSearchValue] = useState('')
   const queryClient = useQueryClient()
-  const navigate = useCustomNavigate()
+  const navigate = useNavigate()
 
   // 获取所有商品分类
   const { data, isLoading } = useQuery({
