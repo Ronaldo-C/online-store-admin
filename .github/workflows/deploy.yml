@@ -38,6 +38,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: ${{ secrets.SERVER_PORT }}
-          source: 'dist/admin/*'
+          source: 'dist/*'
           target: '/var/www/online-store-admin/'
+          strip_components: 1
           rm: true
