@@ -6,6 +6,9 @@ import path from 'path'
 export default defineConfig({
   plugins: [react()],
   base: '/admin/',
+  build: {
+    outDir: 'dist/admin',
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
